@@ -1,0 +1,3 @@
+/Users/stefanbagrizewitsch/Documents/GitHub/info1-cup/XOR Sum/solution/cmake-build-debug/CMakeFiles/solution.dir
+/Users/stefanbagrizewitsch/Documents/GitHub/info1-cup/XOR Sum/solution/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/stefanbagrizewitsch/Documents/GitHub/info1-cup/XOR Sum/solution/cmake-build-debug/CMakeFiles/rebuild_cache.dir
