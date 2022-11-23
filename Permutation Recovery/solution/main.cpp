@@ -4,16 +4,16 @@
 
 using namespace std;
 
-const long long MOD = 9999999999999937LL;
-const long long P = 10;
-const int MAX_N = 7e4 + 5;
+const long long mod = 9999999999999937LL;
+const long long p = 10;
+const int maxN = 7e4 + 5;
 
-long long modSum(long long x, long long y) {
-    return (x + y) % MOD;
+long long ModSum(const long long x, const long long y) {
+    return (x + y) % mod;
 }
 
-long long modSubtraction(long long x, long long y) {
-    return (x - y + MOD) % MOD;
+long long ModSubtraction(const long long x, const long long y) {
+    return (x - y + mod) % mod;
 }
 
 int main() {
@@ -24,41 +24,41 @@ int main() {
     int n;
     cin >> n;
 
-    long long lastH = 0;
-    long long diff[MAX_N];
+    long long last_h = 0;
+    long long diff[maxN];
     for (int i = 0; i < n; i++) {
         string s;
         cin >> s;
 
         long long h = 0;
-        for (int j = 0; j < (int)s.size(); j++) {
-            h = modSum(h * P, s[j] - '0');
+        for (int j = 0; j < s.size(); j++) {
+            h = ModSum(h * p, s[j] - '0');
         }
 
-        diff[i] = modSubtraction(h, lastH);
-        lastH = h;
+        diff[i] = ModSubtraction(h, last_h);
+        last_h = h;
     }
 
-    const int len = (int)sqrt(n) + 1;
-    long long hSum = 1;
-    long long need[MAX_N];
-    unordered_map<long long, int> st[MAX_N];
+    const int length = (int)sqrt(n) + 1;
+    long long h_sum = 1;
+    long long need[maxN];
+    unordered_map<long long, int> st[maxN];
 
     for (int i = 0; i < n; i++) {
-        need[i] = modSubtraction(hSum, diff[i]);
-        st[i / len][need[i]] = i;
+        need[i] = ModSubtraction(h_sum, diff[i]);
+        st[i / length][need[i]] = i;
 
-        hSum = modSum(hSum, diff[i]);
+        h_sum = ModSum(h_sum, diff[i]);
     }
 
-    bool stat[MAX_N];
-    long long push[MAX_N];
-    int result[MAX_N];
-    fill(stat, stat + MAX_N, true);
-    fill(push, push + MAX_N, 0LL);
-    fill(result, result + MAX_N, 0);
+    bool stat[maxN];
+    long long push[maxN];
+    int result[maxN];
+    fill(stat, stat + maxN, true);
+    fill(push, push + maxN, 0LL);
+    fill(result, result + maxN, 0);
 
-    const int maxSegmIndex = (n - 1) / len;
+    const int maxSegmIndex = (n - 1) / length;
     for (int j = n; j > 0; j--) {
         int pos = 0;
         for (int index = maxSegmIndex; index >= 0; index--) {
@@ -71,9 +71,9 @@ int main() {
         result[pos] = j;
         stat[pos] = false;
 
-        const int segmIndex = pos / len;
-        const int l = segmIndex * len;
-        const int r = min(n, l + len);
+        const int segmIndex = pos / length;
+        const int l = segmIndex * length;
+        const int r = min(n, l + length);
         st[segmIndex].clear();
 
         for (int i = l; i < r; i++) {
@@ -81,13 +81,13 @@ int main() {
                 continue;
             }
             if (i > pos) {
-                need[i] = modSubtraction(need[i], diff[pos]);
+                need[i] = ModSubtraction(need[i], diff[pos]);
             }
             st[segmIndex][need[i]] = i;
         }
 
-        for (int ind = segmIndex + 1; ind <= maxSegmIndex; ind++) {
-            push[ind] = modSum(push[ind], diff[pos]);
+        for (int index = segmIndex + 1; index <= maxSegmIndex; index++) {
+            push[index] = ModSum(push[index], diff[pos]);
         }
     }
 
